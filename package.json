@@ -1,0 +1,30 @@
+{
+  "name": "koa2wechat",
+  "version": "1.0.0",
+  "description": "simple wechat backend based on koa2",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "koa2",
+    "wechat"
+  ],
+  "author": "Yongsheng Xu",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.14.0",
+    "koa": "^2.0.0-alpha.7",
+    "lodash": "^4.15.0",
+    "raw-body": "^2.1.7",
+    "sha1": "^1.1.1",
+    "xml2js": "^0.4.17"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.14.0",
+    "babel-core": "^6.14.0",
+    "babel-loader": "^6.2.5",
+    "babel-preset-es2015": "^6.14.0",
+    "babel-preset-stage-3": "^6.11.0"
+  }
+}
