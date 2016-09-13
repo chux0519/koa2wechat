@@ -13,16 +13,16 @@ babel v6.14.0
 - 支持自定义规则，进行自动回复（包括文本，图片，音乐，小视频，视频，图文类型）
 
 #####快速开始
-1. 安装
+1.安装
 ```javascript
     npm install koa2wechat
 ```
-2. 引入模块（默认导出{Wechat,wLoader,ReplyBuilder}，下文详细介绍）
+2.引入模块（默认导出{Wechat,wLoader,ReplyBuilder}，下文详细介绍）
 ```javascript
     import {wLoader} from 'koa2wechat'
     import Koa from 'koa2'
 ```
-3. 引入配置文件
+3.引入配置文件
 ```javascript
     import config from './config'
 ```
@@ -39,7 +39,7 @@ babel v6.14.0
     export const {wechat} = config
     export default config
 ```
-4. 装载中间件、启动服务
+4.装载中间件、启动服务
 ```javascript
     const app = new Koa()
     app.use(wLoader(config.wechat,null))
@@ -47,7 +47,7 @@ babel v6.14.0
 ```
    此时公众号会默认自动回复文本消息，若要自定义规则需要将上面的null替换为根据业务逻辑写出的handler
 
-5. 根据业务逻辑自定义handler
+5.根据业务逻辑自定义handler
 
     例如：/src/handler/defaultHandler.js
     
@@ -84,7 +84,7 @@ babel v6.14.0
 
     export default defaultHandler
 ```
- 推荐方式
+推荐方式
 随着业务逻辑的复杂度增加，可以考虑使用一个handler来分发各个事件的handler来实现响应。比如实现一个handler
 例如：src/handler/handler.js 配合上文的defaultHandler
 ```javascript
@@ -139,7 +139,7 @@ babel v6.14.0
 ```
 然后再将handler引入，将第4步中的null替换为handler即可
 
-7.示例程序在这里：
+6.示例程序在这里：
 
 #####结构说明：
 
