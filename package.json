@@ -2,7 +2,11 @@
   "name": "koa2wechat",
   "version": "1.0.0",
   "description": "simple wechat backend based on koa2",
-  "main": "index.js",
+  "main": "app/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chux0519/koa2wechat"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -23,8 +27,7 @@
   "devDependencies": {
     "babel-cli": "^6.14.0",
     "babel-core": "^6.14.0",
-    "babel-loader": "^6.2.5",
     "babel-preset-es2015": "^6.14.0",
     "babel-preset-stage-3": "^6.11.0"
   }
-}
+} 

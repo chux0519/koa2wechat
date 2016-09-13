@@ -1,12 +1,11 @@
-import Koa from 'koa'
-import sha1 from 'sha1'
-import config from './config'
-import Loader from './wechat/Loader'
-import handler from './handler/handler'
+import wLoader from './wechat/Loader'
+import Wechat from './wechat/Wechat'
+import wTpls from './xml/templates'
 
-const app = new Koa()
+export {Wechat,wLoader,wTpls}
 
-
-app.use(Loader(config,handler))
-
-app.listen(3000)
+export default {
+	Wechat:Wechat,
+	wLoader:wLoader,
+	wTpls:wTpls
+}

@@ -1,5 +1,5 @@
 node_modules/
 dist/
-app/config.js
-app/handler/config.js
 app/wechat/token.txt
+config.js
+.gitignore

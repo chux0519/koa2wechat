@@ -32,7 +32,7 @@ class Wechat{
 		this.baseUrl = 'https://api.weixin.qq.com/cgi-bin/'
 		this.tokenUrl = this.baseUrl + 
 		`token?grant_type=client_credential&appid=${config.appid}&secret=${config.secret}`
-		this.getToken()
+		this.getToken().then(token=>console.log("ok"))
 	}
 
 	isValidToken(token){
@@ -53,7 +53,7 @@ class Wechat{
 			}
 		}
 		// getLocalToken
-		readFile(this.localTokenPath)
+		return readFile(this.localTokenPath)
 		.then(localTokenStr => {
 			let localToken = JSON.parse(localTokenStr)
 			console.log("local token",localToken)

@@ -1,11 +1,11 @@
-import textTpl from '../xml/textTpl'
-
+import {textTpl} from '../xml/templates'
+// return a Promise
 let defaultHandler = (xml)=>{
-	// default to echo
+	// default
 	let rpl = {}
 	rpl.ToUserName = xml.FromUserName
 	rpl.FromUserName = xml.ToUserName
-	rpl.Content = `I don't understand`
+	rpl.Content = `Hello from koa2wechat`
 	rpl.CreateTime = new Date().getTime()
 	return Promise.resolve(textTpl(rpl))
 }
