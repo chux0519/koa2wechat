@@ -3,3 +3,4 @@ dist/
 app/wechat/token.txt
 config.js
 .gitignore
+coverage/

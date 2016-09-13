@@ -1,11 +1,11 @@
 let videoTpl = (msg)=>{
 	let{
-		ToUserName,
-		FromUserName,
-		CreateTime,
-		MediaId,
-		Title,
-		Description
+		to:ToUserName,
+		from:FromUserName,
+		ts:CreateTime,
+		mediaId:MediaId,
+		title:Title,
+		desc:Description
 	} = msg
 	let retStr =
 	`<xml>

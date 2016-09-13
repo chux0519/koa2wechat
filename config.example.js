@@ -1,6 +1,6 @@
 let config = {
 	wechat:{
-		local_token_path:__dirname + '/app/token.txt',
+		local_token_path:__dirname + '/src/token.txt',
 		appid:"your app id",
 		secret:"your secret"
 	}
