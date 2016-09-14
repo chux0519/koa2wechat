@@ -1,6 +1,5 @@
 node_modules/
-dist/
-app/wechat/token.txt
+src/wechat/token.txt
 config.js
 .gitignore
 coverage/
