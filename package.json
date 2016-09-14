@@ -1,6 +1,6 @@
 {
   "name": "koa2wechat",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "simple wechat backend based on koa2",
   "main": "lib/index.js",
   "repository": {

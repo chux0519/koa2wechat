@@ -8,6 +8,7 @@ import {Wechat,WeReply} from './src/index'
 import {weconfig} from './config'
 
 const app = new Koa()
+const wechat = new Wechat(weconfig)
 
 app
 // connect and reply

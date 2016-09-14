@@ -4,7 +4,7 @@ let WeHandler = (handler)=>{
 	return async (ctx,next)=>{
 		if(!ctx.wechat.req) console.log("no request from client")
 		let xml = ctx.wechat.req
-		if(!handler) let handler = defaultHandler
+		if(!handler) handler = defaultHandler
 
 		let res = await handler(xml)
 		ctx.wechat.res = res

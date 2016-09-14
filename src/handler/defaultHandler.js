@@ -1,4 +1,4 @@
-import {ReplyBuilder} from '../index'
+import {WeReply} from '../index'
 // ReplyBuilder是一个类，用于创建各类返回信息，生成对应的xml字符串
 const welcomeMsg = 'hello from koa2wechat'
 
@@ -12,7 +12,7 @@ let defaultHandler = (xml)=>{
 
 
 	// 实例化builder
-	let replyBuilder = new ReplyBuilder()
+	let weReply = new WeReply()
 
 	// 生成回复将会使用到的meta信息，包括 本机`from`， 目标`to`， 时间戳`ts`（时间戳非必选项）
 	let meta = {from:ToUserName,to:FromUserName,ts:new Date().getTime()}
@@ -23,7 +23,7 @@ let defaultHandler = (xml)=>{
 		content:welcomeMsg
 	}
 	// 传入回复选项，生成相应的xml字符串
-	let rpl = replyBuilder.genXML(textRpl)
+	let rpl = weReply.genXML(textRpl)
 	// 把Promise 返回回去
 	return Promise.resolve(rpl)
 }
