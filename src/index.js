@@ -1,11 +1,14 @@
-import wLoader from './wechat/Loader'
+import 'babel-polyfill'
+import WeConnector from './wechat/WeConnector'
 import Wechat from './wechat/Wechat'
-import ReplyBuilder from './wechat/Reply'
+import WeReply from './wechat/WeReply'
+import WeHandler from './wechat/WeHandler'
 
-export {Wechat,wLoader,ReplyBuilder}
+export {Wechat,WeConnector,WeHandler,WeReply}
 
-export default {
+export let k2w = {
 	Wechat:Wechat,
-	wLoader:wLoader,
-	ReplyBuilder:ReplyBuilder
+	WeConnector:WeConnector,
+	WeHandler:WeHandler,
+	WeReply:WeReply
 }

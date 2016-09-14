@@ -1,10 +1,11 @@
 let config = {
-	wechat:{
+	weconfig:{
 		local_token_path:__dirname + '/src/token.txt',
 		appid:"your app id",
-		secret:"your secret"
+		secret:"your secret",
+		token:"your token for encrypt"
 	}
 }
 
-export const {wechat} = config
+export const {weconfig} = config
 export default config

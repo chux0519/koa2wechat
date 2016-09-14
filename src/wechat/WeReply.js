@@ -1,7 +1,7 @@
 import {textTpl,videoTpl,imageTpl,voiceTpl,musicTpl,newsTpl} from '../xml/templates'
 
 const welcomeStr = 'hello from koa2wechat!'
-class ReplyBuilder{
+class WeReply{
 
 	/**
 	 * [constructor]
@@ -136,4 +136,4 @@ class ReplyBuilder{
 
 }
 
-export default ReplyBuilder
+export default WeReply
