@@ -2,23 +2,23 @@ import sha1 from 'sha1'
 import getRawBody from 'raw-body'
 import msgParser from '../xml/parser'
 import formater from '../xml/formatter'
-import {Exception,ExceptionHandler} from './Exception'
+import {Exceptions,ExceptionHandler} from './Exception'
 
 /**
  * middle ware
  * @param  {String} token [notice this token is for encrypt not access_token]
  * @return {async fn}       [middle ware]
  */
-let WeConnector = (token)=>{
+let WeConnector = (_token)=>{
 	// return a middleware async fn
+	const token = _token
 	return async(ctx,next)=>{
 		try{
-			const token = token
+			ctx.wechat = {}
 			let{signature,timestamp,nonce,echostr} = ctx.query;
 			if(!signature || !timestamp || ! nonce){
 				// not from wechat
-				ctx.body = "wrong place"
-				return
+				throw new Exceptions.Unauthorized(`wrong signature`)
 			}
 			let sha = sha1([token,timestamp,nonce].sort().join(''))
 
@@ -26,17 +26,17 @@ let WeConnector = (token)=>{
 			if(ctx.method==='GET'){
 				if(sha === signature){
 					ctx.body = echostr
+					return
 				}
 
 				else{
-					ctx.body = "encrypt wrong!"
+					throw new Exceptions.Unauthorized(`wrong signature`)
 				}
 			}
 			// post for logic layer
 			else if(ctx.method==='POST'){
 				if(sha!==signature){
-					ctx.body = 'wrong place'
-					return
+					throw new Exceptions.Unauthorized(`wrong signature`)
 				}
 				// get rawData
 				let rawData = await getRawBody(ctx.req,{
@@ -52,14 +52,13 @@ let WeConnector = (token)=>{
 				let xml = formater(xmlData.xml)
 				console.info("xml obj : ",xml)
 
-				ctx.wechat = {}
 				ctx.wechat.req = xml
 
 				// handle the request
 				await next()
 
 				// handle error
-				if(!ctx.wechat.res) throw new Exception(`Can't handle the request ${ctx.wechat.req}`)
+				if(!ctx.wechat.res) throw new Exceptions.ImplementError(`Can't handle the request ${ctx.wechat.req}`)
 				
 				// reply xml
 				ctx.status = 200
@@ -69,6 +68,7 @@ let WeConnector = (token)=>{
 			}
 		}
 		catch(e){
+			console.log(e)
 			ctx.body = ExceptionHandler(e)
 		}
 	}
