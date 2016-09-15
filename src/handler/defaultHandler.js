@@ -1,5 +1,5 @@
 import {WeReply} from '../index'
-// ReplyBuilder是一个类，用于创建各类返回信息，生成对应的xml字符串
+// WeReply是一个类，用于创建各类返回信息，生成对应的xml字符串
 const welcomeMsg = 'hello from koa2wechat'
 
 // 返回一个Promise对象
@@ -11,7 +11,7 @@ let defaultHandler = (xml)=>{
 	// 这里可以插入需要执行的业务逻辑代码，比如判断消息来源是谁，他回复了什么类型的数据之类的
 
 
-	// 实例化builder
+	// 实例化wereaply
 	let weReply = new WeReply()
 
 	// 生成回复将会使用到的meta信息，包括 本机`from`， 目标`to`， 时间戳`ts`（时间戳非必选项）
