@@ -163,56 +163,70 @@ babel v6.14.0
 
 #####结构说明：
 ```
-├── config.example.js（配置文件示例）
-├── lib（编译后的文件）
-│   ├── handler
-│   │   ├── defaultHandler.js
-│   │   └── handler.js
-│   ├── index.js
-│   ├── wechat
-│   │   ├── Loader.js
-│   │   └── Wechat.js
-│   └── xml
-│       ├── formatter.js
-│       ├── parser.js
-│       ├── templates
-│       │   ├── imageTpl.js
-│       │   ├── musicTpl.js
-│       │   ├── newsTpl.js
-│       │   ├── textTpl.js
-│       │   ├── videoTpl.js
-│       │   └── voiceTpl.js
-│       └── templates.js
+koa2wechat
+├── config.example.js(config示例)
+├── lib
+│   ├── api.js
+│   ├── handler
+│   │   ├── defaultHandler.js
+│   │   └── handler.js
+│   ├── index.js
+│   ├── wechat
+│   │   ├── apitest.js
+│   │   ├── Exception.js
+│   │   ├── Loader.js
+│   │   ├── Reply.js
+│   │   ├── WechatApi.js
+│   │   ├── Wechat.js
+│   │   ├── WeConnector.js
+│   │   ├── WeHandler.js
+│   │   └── WeReply.js
+│   └── xml
+│       ├── formatter.js
+│       ├── parser.js
+│       ├── templates
+│       │   ├── imageTpl.js
+│       │   ├── musicTpl.js
+│       │   ├── newsItemTpl.js
+│       │   ├── newsTpl.js
+│       │   ├── textTpl.js
+│       │   ├── videoTpl.js
+│       │   └── voiceTpl.js
+│       └── templates.js
 ├── package.json
-├── readme.en.md（英文版的readme）
-├── readme.md（说明）
-├── server.js（示例koa服务）
-├── src（源码）
-│   ├── handler（handler）
-│   │   ├── defaultHandler.js（默认的handler）
-│   │   └── handler.js
-│   ├── index.js（主文件）
-│   ├── wechat（微信相关）
-│   │   ├── Loader.js（wLoader函数，返回aync函数作为koa2的中间件）
-│   │   ├── Reply.js（ReplyBuilder类，用于构建相应的xml字符串）
-│   │   ├── token.txt（用于维护access_token，存储到本地）
-│   │   └── Wechat.js（微信介入相关，Wechat类）
-│   └── xml（xml解析拼凑相关）
-│       ├── formatter.js（xml2js后格式化为object的文件）
-│       ├── parser.js（xml2js解析xml文件）
-│       ├── templates（回复模板）
-│       │   ├── imageTpl.js
-│       │   ├── musicTpl.js
-│       │   ├── newsItemTpl.js
-│       │   ├── newsTpl.js
-│       │   ├── textTpl.js
-│       │   ├── videoTpl.js
-│       │   └── voiceTpl.js
-│       └── templates.js（导出所有模板）
-└── test（测试）
-    ├── mocha.opts（mocha选项）
-    ├── ReplyBuilder.js（reply测试/未完成）
-    └── templates.js（template测试/未完成）
+├── readme.md
+├── server.js（模拟server）
+├── src
+│   ├── api.js（api接口，暂时只添加了素材接口）
+│   ├── handler
+│   │   ├── defaultHandler.js
+│   │   └── handler.js
+│   ├── index.js（主文件）
+│   ├── wechat
+│   │   ├── Exception.js（异常类）
+│   │   ├── token.txt（存储access_token）
+│   │   ├── WechatApi.js(类，暂时只实现了素材管理)
+│   │   ├── Wechat.js（基类，只负责access_token的维护）
+│   │   ├── WeConnector.js（中间件，只负责接入微信server）
+│   │   ├── WeHandler.js（中间件，负责业务逻辑）
+│   │   └── WeReply.js（类，用于创建各类回复信息）
+│   └── xml
+│       ├── formatter.js（扁平化object）
+│       ├── parser.js（解析xml至object）
+│       ├── templates（回复模板）
+│       │   ├── imageTpl.js
+│       │   ├── musicTpl.js
+│       │   ├── newsItemTpl.js
+│       │   ├── newsTpl.js
+│       │   ├── textTpl.js
+│       │   ├── videoTpl.js
+│       │   └── voiceTpl.js
+│       └── templates.js（模板入口）
+└── test（测试/未完成）
+    ├── mocha.opts
+    ├── ReplyBuilder.js
+    └── templates.js
+
 ```
 ###更新
 2016-09-20-------------------增加新类WechatApi(实现素材上传下载接口)
