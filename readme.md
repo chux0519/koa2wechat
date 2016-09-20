@@ -214,8 +214,7 @@ babel v6.14.0
     ├── ReplyBuilder.js（reply测试/未完成）
     └── templates.js（template测试/未完成）
 ```
-####更新
-- - -
+###更新
 2016-09-20-------------------增加新类WechatApi(实现素材上传下载接口)
 导出接口：
 ```javascript
@@ -420,9 +419,9 @@ wechatapi.downloadPerm('video',mediaId,__dirname + '/../../material')
 })
 .catch(e=>console.log(e))
 
-下载永久素材-image
-测试号测试时有问题，文件会莫名其妙大几百b
-curl和axios下载的结果相同，初步认为是微信服务器/或者是测试号的原因
+// 下载永久素材-image
+// 测试号测试时有问题，文件会莫名其妙大几百b
+// curl和axios下载的结果相同，初步认为是微信服务器/或者是测试号的原因
 let mediaId = 'LnFqDNEdJXP8Mt8lfcrKctnwaBVhh1Zq7VoRaBEOZN8'
 
 wechatapi.downloadPerm('thumb',mediaId,__dirname + '/../../material')
