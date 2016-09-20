@@ -17,7 +17,7 @@ const writeFile = (token,path)=> {
 			if(err) reject(err)
 			else {
 				console.log("saved new token:",token)
-				resolve(token)
+				resolve(JSON.parse(token))
 			}
 		})
 	})
@@ -32,7 +32,7 @@ class Wechat{
 		this.baseUrl = 'https://api.weixin.qq.com/cgi-bin/'
 		this.tokenUrl = this.baseUrl + 
 		`token?grant_type=client_credential&appid=${config.appid}&secret=${config.secret}`
-		this.getToken().then(token=>console.log("ok"))
+		// this.getToken().then(token=>console.log("ok"))
 	}
 
 	isValidToken(token){

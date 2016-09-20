@@ -165,52 +165,306 @@ babel v6.14.0
 ```
 ├── config.example.js（配置文件示例）
 ├── lib（编译后的文件）
-│   ├── handler
-│   │   ├── defaultHandler.js
-│   │   └── handler.js
-│   ├── index.js
-│   ├── wechat
-│   │   ├── Loader.js
-│   │   └── Wechat.js
-│   └── xml
-│       ├── formatter.js
-│       ├── parser.js
-│       ├── templates
-│       │   ├── imageTpl.js
-│       │   ├── musicTpl.js
-│       │   ├── newsTpl.js
-│       │   ├── textTpl.js
-│       │   ├── videoTpl.js
-│       │   └── voiceTpl.js
-│       └── templates.js
+│   ├── handler
+│   │   ├── defaultHandler.js
+│   │   └── handler.js
+│   ├── index.js
+│   ├── wechat
+│   │   ├── Loader.js
+│   │   └── Wechat.js
+│   └── xml
+│       ├── formatter.js
+│       ├── parser.js
+│       ├── templates
+│       │   ├── imageTpl.js
+│       │   ├── musicTpl.js
+│       │   ├── newsTpl.js
+│       │   ├── textTpl.js
+│       │   ├── videoTpl.js
+│       │   └── voiceTpl.js
+│       └── templates.js
 ├── package.json
 ├── readme.en.md（英文版的readme）
 ├── readme.md（说明）
 ├── server.js（示例koa服务）
 ├── src（源码）
-│   ├── handler（handler）
-│   │   ├── defaultHandler.js（默认的handler）
-│   │   └── handler.js
-│   ├── index.js（主文件）
-│   ├── wechat（微信相关）
-│   │   ├── Loader.js（wLoader函数，返回aync函数作为koa2的中间件）
-│   │   ├── Reply.js（ReplyBuilder类，用于构建相应的xml字符串）
-│   │   ├── token.txt（用于维护access_token，存储到本地）
-│   │   └── Wechat.js（微信介入相关，Wechat类）
-│   └── xml（xml解析拼凑相关）
-│       ├── formatter.js（xml2js后格式化为object的文件）
-│       ├── parser.js（xml2js解析xml文件）
-│       ├── templates（回复模板）
-│       │   ├── imageTpl.js
-│       │   ├── musicTpl.js
-│       │   ├── newsItemTpl.js
-│       │   ├── newsTpl.js
-│       │   ├── textTpl.js
-│       │   ├── videoTpl.js
-│       │   └── voiceTpl.js
-│       └── templates.js（导出所有模板）
+│   ├── handler（handler）
+│   │   ├── defaultHandler.js（默认的handler）
+│   │   └── handler.js
+│   ├── index.js（主文件）
+│   ├── wechat（微信相关）
+│   │   ├── Loader.js（wLoader函数，返回aync函数作为koa2的中间件）
+│   │   ├── Reply.js（ReplyBuilder类，用于构建相应的xml字符串）
+│   │   ├── token.txt（用于维护access_token，存储到本地）
+│   │   └── Wechat.js（微信介入相关，Wechat类）
+│   └── xml（xml解析拼凑相关）
+│       ├── formatter.js（xml2js后格式化为object的文件）
+│       ├── parser.js（xml2js解析xml文件）
+│       ├── templates（回复模板）
+│       │   ├── imageTpl.js
+│       │   ├── musicTpl.js
+│       │   ├── newsItemTpl.js
+│       │   ├── newsTpl.js
+│       │   ├── textTpl.js
+│       │   ├── videoTpl.js
+│       │   └── voiceTpl.js
+│       └── templates.js（导出所有模板）
 └── test（测试）
     ├── mocha.opts（mocha选项）
     ├── ReplyBuilder.js（reply测试/未完成）
     └── templates.js（template测试/未完成）
+```
+####更新
+- - -
+2016-09-20-------------------增加新类WechatApi(实现素材上传下载接口)
+导出接口：
+```javascript
+	/**
+	 * [uploadTemp 用于上传临时素材]
+	 * @param  {[string]} type      [媒体文件类型，分别有图片（image）、语音（voice）、视频（video）和缩略图（thumb）]
+	 * @param  {[string]} mediaPath [文件全路径，例如‘../../test.jpg’]
+	 * @return {[Promise]}           [返回一个网络请求Promise]
+	 */
+     uploadTemp(type,mediaPath)
+
+	/**
+	 * [downloadTemp 下载临时素材]
+	 * @param  {[string]} mediaId   [参数]
+	 * @param  {[string]} directory [存储素材目录]
+	 * @return {[promise]}           [成功将resolve已下载的素材名]
+	 */
+	downloadTemp(mediaId,directory,isVideo=false)
+    
+	/**
+	 * [uploadNews 上传永久素材--图文]
+	 * @param  {[object]} articles 详细字段参考：http://mp.weixin.qq.com/wiki/10/10ea5a44870f53d79449290dfd43d006.html
+	 * 例如  {
+	 *        "title": TITLE,
+	 *        "thumb_media_id": THUMB_MEDIA_ID,
+	 *        "author": AUTHOR,
+	 *        "digest": DIGEST,
+	 *        "show_cover_pic": SHOW_COVER_PIC(0 / 1),
+	 *        "content": CONTENT,
+	 *        "content_source_url": CONTENT_SOURCE_URL
+	 *      }
+	 * @return {[Promise]}          [axios Post]
+	 */
+	uploadNews(articles)
+    
+	/**
+	 * [uploadPerm 上传除了图文类型的其他永久素材]
+	 * @param  {[string]} type      [媒体文件类型，分别有图片（image）、语音（voice）、视频（video）和缩略图（thumb）]
+	 * @param  {[string]} mediaPath [目标文件路径]
+	 * @param  {[object]} videoDesc [只有上传类型为‘video’才需要，例如：
+	 * {
+	 * 		"title":VIDEO_TITLE,
+	 * 		"introduction":INTRODUCTION
+	 * 	}					  						  
+	 * @return {[Promise]}           [axios POST]
+	 */
+	uploadPerm(type,mediaPath,videoDesc)
+    
+	/**
+	 * [downloadPerm 下载永久素材]
+	 * @param  {[string]} type      [如果要获取图文，则填写（news），获取视频填写（video），获取图片（image）、语音（voice）和缩略图（thumb）]
+	 * @param  {[string]} mediaId   [media_id]
+	 * @param  {[存储在本地的目录]} directory [图文直接返回字符串，不会写入本地]
+	 * @return {[Promise]}           [获取图文最终返回json，其他多媒体类型最终返回文件名]
+	 */
+	downloadPerm(type,mediaId,directory)
+    
+	/**
+	 * [removePerm 删除永久素材]
+	 * @param  {[string]} mediaId [media_id]
+	 * @return {[Promise]}         [最终返回json{status:true,item:form}，status代表是否删除成功。item为post的内容，如果不成功可以缓存下来]
+	 */
+	removePerm(mediaId)
+    
+	/**
+	 * [updateNews 更新永久图文素材] 具体参数意义请参考：http://mp.weixin.qq.com/wiki/10/c7bad9a463db20ff8ccefeedeef51f9e.html
+	 * @param  {[string]} mediaId [media_id]
+	 * @param  {[int]} index   [index]
+	 * @param  {[object]} article [article]
+	 * @return {[type]}         [最终返回json{status:true,item:form}，status代表是否删除成功。item为post的内容，如果不成功可以缓存下来]
+	 */
+	updateNews(mediaId,index,article)
+    
+	/**
+	 * [getPermCount 获取永久素材类型和个数]
+	 * @return {[Promise]} 最终返回json，形如
+	 * {
+	 *	  "voice_count":COUNT,
+	 *	  "video_count":COUNT,
+	 *	  "image_count":COUNT,
+	 *	  "news_count":COUNT
+	 * }
+	 */
+	getPermCount()
+    
+	/**
+	 * [batchGetPerm 批量获取某类型的永久素材信息]
+	 * @param  {[string]} type   [素材的类型，图片（image）、视频（video）、语音 （voice）、图文（news）]
+	 * @param  {[int]} offset [从全部素材的该偏移位置开始返回，0表示从第一个素材 返回]
+	 * @param  {[int]} count  [返回素材的数量，取值在1到20之间]
+	 * @return {[Promise]}        [最终返回参数请参考：http://mp.weixin.qq.com/wiki/15/8386c11b7bc4cdd1499c572bfe2e95b3.html]
+	 */
+	batchGetPerm(type,offset,count)
+```
+
+使用方法：
+```javascript
+// weconfig 和 新建Wechat对象的weconfig格式相同
+let wechatapi = new WechatApi(weconfig)
+
+// 上传临时素材-thumb
+wechatapi
+.uploadTemp('thumb',__dirname + '/../../test/logo.png')
+.then(response=>console.log(response.data))
+.catch(e=>{console.log(e)})
+
+// 上传临时素材 voice
+// server error 猜想并不支持amr格式
+wechatapi
+.uploadTemp('voice',__dirname + '/../../material/voice.amr')
+.then(response=>console.log(response.data))
+.catch(e=>{console.log(e)})
+
+// 上传临时素材 video
+wechatapi
+.uploadTemp('video',__dirname + '/../../material/gf.mp4')
+.then(response=>console.log(response.data))
+.catch(e=>{console.log(e)})
+
+
+// 下载临时素材
+// 视频只支持http协议
+wechatapi
+.downloadTemp(mediaId,__dirname + '/../../material',true)
+.then(filename=>{
+	console.log(`==>${filename} downloaded!`)
+})
+.catch(e=>console.log(e))
+
+// 上传永久素材-news 注意 articles 长度<=8
+let thumb_media_id = 'LnFqDNEdJXP8Mt8lfcrKcipoGRdbxawd5iF-4CoBjRk'
+let articles = [{
+       "title": 'logo',
+       "thumb_media_id": thumb_media_id,
+       "author": "徐涌盛",
+       "digest": "digest",
+       "show_cover_pic": 1,
+       "content": "这里是内容1",
+       "content_source_url": "https://github.com/chux0519"
+    },
+    {
+       "title": 'logo2',
+       "thumb_media_id": thumb_media_id,
+       "author": "徐涌盛",
+       "digest": "digest2",
+       "show_cover_pic": 1,
+       "content": "这里是内容2",
+       "content_source_url": "https://github.com/chux0519"
+    }]
+wechatapi.uploadNews(articles)
+.then(response=>{
+	console.log(response.data)
+})
+.catch(e=>console.log(e))
+
+
+// 上传永久素材-thumb
+wechatapi
+.uploadPerm('thumb',__dirname + '/../../test/logo.png')
+.then(response=>console.log(response.data))
+.catch(e=>{console.log(e)})
+
+// 上传永久素材-image
+wechatapi
+.uploadPerm('image',__dirname + '/../../test/logo.png')
+.then(response=>console.log(response.data))
+.catch(e=>{console.log(e)})
+
+
+// 上传永久素材-video
+wechatapi
+.uploadPerm('video',__dirname + '/../../material/gf.mp4',videoDesc)
+.then(response=>console.log(response.data))
+.catch(e=>{console.log(e)})
+
+// 上传永久素材-voice
+wechatapi
+.uploadPerm('voice',__dirname + '/../../material/voice.amr')
+.then(response=>console.log(response.data))
+.catch(e=>{console.log(e)})
+
+
+// 下载永久素材-articles
+let mediaId = 'LnFqDNEdJXP8Mt8lfcrKcsQ7QsxUDgVa_23horR0Hi0'
+wechatapi.downloadPerm('news',mediaId,'./')
+.then(response=>{
+	if(response.data)
+		console.log(response.data)
+	else
+		console.log(response)
+})
+.catch(e=>console.log(e))
+
+// 下载永久素材-video
+let mediaId = 'LnFqDNEdJXP8Mt8lfcrKckzvFfJcIuHQNWv039vuqZA'
+wechatapi.downloadPerm('video',mediaId,__dirname + '/../../material')
+.then(response=>{
+	if(response.data)
+		console.log(response.data)
+	else
+		console.log(response)
+})
+.catch(e=>console.log(e))
+
+下载永久素材-image
+测试号测试时有问题，文件会莫名其妙大几百b
+curl和axios下载的结果相同，初步认为是微信服务器/或者是测试号的原因
+let mediaId = 'LnFqDNEdJXP8Mt8lfcrKctnwaBVhh1Zq7VoRaBEOZN8'
+
+wechatapi.downloadPerm('thumb',mediaId,__dirname + '/../../material')
+.then(response=>{
+	if(response.data)
+		console.log(response.data)
+	else
+		console.log(response)
+})
+.catch(e=>console.log(e))
+
+
+// 删除永久素材
+wechatapi.removePerm("123456")
+.then(msg=>console.log(msg))
+.catch(e=>console.log(e))
+
+// 更改永久图文消息 
+let mediaId = 'LnFqDNEdJXP8Mt8lfcrKcsQ7QsxUDgVa_23horR0Hi0'
+// 不能改变已经放上去图文素材的长度 index<length
+let index = 0
+let article = {
+       "title": "这里是更新后的标题",
+       "thumb_media_id": 'LnFqDNEdJXP8Mt8lfcrKcipoGRdbxawd5iF-4CoBjRk',
+       "author": "徐涌盛",
+       "digest": "",
+       "show_cover_pic": 1,
+       "content": "这里是内容",
+       "content_source_url": "https://github.com/chux0519"
+    }
+wechatapi.updateNews(mediaId,index,article)
+.then(msg=>console.log(msg))
+.catch(e=>console.log(e))
+
+// 获取永久素材条数 
+{ voice_count: 0, video_count: 4, image_count: 5, news_count: 1 }
+wechatapi.getPermCount()
+.then(response=>console.log(response.data))
+.catch(e=>console.log(e))
+
+// 批量获取永久素材
+wechatapi.batchGetPerm("image",0,5)
+.then(response=>console.log(response.data))
+.catch(e=>console.log(e))
 ```

@@ -3,3 +3,7 @@ src/wechat/token.txt
 config.js
 .gitignore
 coverage/
+material/
+test/*.png
+test/*.jpg
+src/wechat/apitest.js
